@@ -26,6 +26,14 @@
         <label>The line indicator's color (if overridden)</label>
         <default>"#FFFFFFFF"</default>
     </entry>
+    <entry name="lineAttentionColorOverride" type="Bool">
+        <label>Choose whether to override the line indicator attention color or not</label>
+        <default>false</default>
+    </entry>
+    <entry name="lineAttentionColor" type="Color">
+        <label>The line indicator's attention color (if overridden)</label>
+        <default>"#FF8D00"</default>
+    </entry>
     <entry name="reversed" type="Bool">
         <label>Reverse the line indicator position</label>
         <default>false</default>

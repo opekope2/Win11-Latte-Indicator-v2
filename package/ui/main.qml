@@ -8,10 +8,10 @@ import org.kde.latte.components 1.0 as LatteComponents
 
 LatteComponents.IndicatorItem {
     id: root
-    needsIconColors: true
     providesFrontLayer: true
     providesHoveredAnimation: true
     providesClickedAnimation: true
+    providesInAttentionAnimation: true
     minThicknessPadding: 0.10
     minLengthPadding: 0.05
     enabledForApplets: indicator && indicator.configuration ? indicator.configuration.enabledForApplets : true
@@ -30,8 +30,9 @@ LatteComponents.IndicatorItem {
     readonly property int groupItemLength: indicator.currentIconSize * 0.13
 
     readonly property real backColorBrightness: colorBrightness(indicator.palette.backgroundColor)
-    readonly property color activeColor: indicator.configuration.lineColorOverride ? indicator.configuration.lineColor : indicator.palette.buttonFocusColor    
+    readonly property color activeColor: indicator.configuration.lineColorOverride ? indicator.configuration.lineColor : indicator.palette.buttonFocusColor
     readonly property color outlineColor: backColorBrightness < 127 ? indicator.palette.backgroundColor : indicator.palette.textColor
+    readonly property color attentionColor: indicator.configuration.lineAttentionColorOverride ? indicator.configuration.lineAttentionColor : "#FF8200"
 
     function colorBrightness(color) {
         return colorBrightnessFromRGB(color.r * 255, color.g * 255, color.b * 255);

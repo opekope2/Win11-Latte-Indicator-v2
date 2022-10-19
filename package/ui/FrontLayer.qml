@@ -17,7 +17,7 @@ Item {
         anchors.bottomMargin: !isOnTop ? lineMargin : 0
         radius: lineRadius
         width: {
-            if (indicator.hasActive || indicator.isHovered) {
+            if (indicator.hasActive || indicator.isHovered || indicator.inAttention) {
                 return height * 4;
             }
 
@@ -26,7 +26,7 @@ Item {
 
         height: root.lineThickness
 
-        color: !indicator.hasActive ? "#9a9a9a" : root.activeColor
+        color: indicator.inAttention ? root.attentionColor : (!indicator.hasActive ? "#9a9a9a" : root.activeColor)
 
         // Latte needed to be restarted to see any changes if root.isVisible was in the visible property
         // The opacity property doesn't have that problem
