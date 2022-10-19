@@ -17,11 +17,11 @@ Item {
         anchors.bottomMargin: !isOnTop ? lineMargin : 0
         radius: lineRadius
         width: {
-            if (indicator.hasActive) {
-                return parent.width - (2 * shrinkLengthEdgeActive);
+            if (indicator.hasActive || indicator.isHovered) {
+                return height * 4;
             }
 
-            return parent.width - (2 * shrinkLengthEdge);
+            return height * 2;
         }
 
         height: root.lineThickness
@@ -51,7 +51,7 @@ Item {
         anchors.topMargin: isOnTop ? lineMargin : 0
         anchors.bottomMargin: !isOnTop ? lineMargin : 0
         active: indicator.configuration.progressAnimationEnabled && lineIndicator.showProgress && indicator.progress > 0
-        width: lineIndicator.width * 0.45
+        width: activeLine.height * 5
         height: activeLine.height
         sourceComponent: Item {
             Item {

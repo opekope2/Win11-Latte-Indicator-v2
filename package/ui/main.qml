@@ -29,7 +29,6 @@ LatteComponents.IndicatorItem {
 
     readonly property int groupItemLength: indicator.currentIconSize * 0.13
 
-    readonly property int colorStyle: indicator.configuration.colorStyle
     readonly property real backColorBrightness: colorBrightness(indicator.palette.backgroundColor)
     readonly property color activeColor: indicator.configuration.lineColorOverride ? indicator.configuration.lineColor : indicator.palette.buttonFocusColor    
     readonly property color outlineColor: backColorBrightness < 127 ? indicator.palette.backgroundColor : indicator.palette.textColor
@@ -46,37 +45,6 @@ LatteComponents.IndicatorItem {
 
     readonly property int lineRadius: indicator.configuration.lineRadius
     readonly property int lineThickness: Math.max(indicator.currentIconSize * indicator.configuration.lineThickness, 2)
-    readonly property int shrinkLengthEdge: 0.44 * parent.width
-    readonly property int shrinkLengthEdgeActive: 0.36 * parent.width
-
-    readonly property real opacityStep: {
-        if (indicator.configuration.maxBackgroundOpacity >= 0.3) {
-            return 0.1;
-        }
-
-        return 0.05;
-    }
-
-    readonly property real backgroundOpacity: {
-        if (indicator.isHovered && indicator.hasActive || (indicator.isWindow && 
-                    indicator.configuration.backgroundAlwaysActive && indicator.isHovered)) {
-            return indicator.configuration.maxBackgroundOpacity;
-        } else if (indicator.hasActive || (indicator.isWindow && indicator.configuration.backgroundAlwaysActive)) {
-            return indicator.configuration.maxBackgroundOpacity - opacityStep;
-        } else if (indicator.isHovered) {
-            return indicator.configuration.maxBackgroundOpacity - 2*opacityStep;
-        }
-
-        return 0;
-    }
-
-    readonly property real bgScale: {
-        if (indicator.isHovered || indicator.hasActive || (indicator.isWindow && 
-                    indicator.configuration.backgroundAlwaysActive))
-            return 1;
-
-        return 0.85;
-    }
     
     property real scale: {
         if (indicator.isPressed)
@@ -238,15 +206,31 @@ LatteComponents.IndicatorItem {
         anchors.leftMargin: plasmoid.location === PlasmaCore.Types.LeftEdge ? root.screenEdgeMargin : 0
         anchors.rightMargin: plasmoid.location === PlasmaCore.Types.RightEdge ? root.screenEdgeMargin : 0
 
-        Loader{
+        Loader {
             id: backLayer
             anchors.fill: parent
            
             // Make this configurable
             active: level.isBackground && !indicator.inRemoving
 
-            sourceComponent: BackLayer{
-                anchors.fill: parent
+            sourceComponent: Item {
+                id: rectangleItem
+
+                property bool isActive: indicator.isActive || (indicator.isWindow && indicator.hasActive)
+                
+                anchors.centerIn: parent
+
+                Loader {
+                    id: frontLayer
+                    anchors.fill: parent
+
+                    active: indicator.isWindow
+
+                    sourceComponent: FrontLayer {
+                        anchors.centerIn: parent
+                        showProgress: root.progressVisible
+                    }
+                }
             }
         }
     }
