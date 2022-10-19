@@ -47,13 +47,11 @@ Item {
 
             ColorAnimation {
                 duration: 500
-                from: root.inactiveColor
                 to: root.attentionColor
             }
 
             ColorAnimation {
                 duration: 500
-                from: root.attentionColor
                 to: root.inactiveColor
             }
         }

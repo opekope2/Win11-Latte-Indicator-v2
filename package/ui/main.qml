@@ -12,6 +12,7 @@ LatteComponents.IndicatorItem {
     providesHoveredAnimation: true
     providesClickedAnimation: true
     providesInAttentionAnimation: true
+    //providesTaskLauncherAnimation: true
     minThicknessPadding: 0.10
     minLengthPadding: 0.05
     enabledForApplets: indicator && indicator.configuration ? indicator.configuration.enabledForApplets : true
@@ -93,66 +94,38 @@ LatteComponents.IndicatorItem {
         }
     }
 
-    NumberAnimation {
+    SequentialAnimation {
         id: anim
-        duration: 125
-        target: level.requested
-        property: "iconScale"
-        to: 1
-        easing.type: Easing.OutQuad
 
-        onStopped: {
-            pause.start()
+        NumberAnimation {
+            duration: 125
+            target: level.requested
+            property: "iconScale"
+            to: 1
+            easing.type: Easing.OutQuad
         }
-    }
 
-    // Even though the pause is extremely short and subtle, I feel like it makes the animation look a lot better
-    PauseAnimation {
-        id: pause
-        duration: 15
-
-        onStopped: {
-            if (indicator.isMinimized) // Would be nice to make this happen only if no window is shown
-                down.start()
-            else if (indicator.isActive)
-                up.start()
+        // Even though the pause is extremely short and subtle, I feel like it makes the animation look a lot better
+        PauseAnimation {
+            duration: 15
         }
-    }
 
-    NumberAnimation {
-        id: down
-        duration: 215
-        target: level.requested
-        property: "iconOffsetY"
-        to: indicator.currentIconSize/10 //Make these dependant on config and orientation
-        easing.type: Easing.OutSine
-
-        onStopped: {
-            defaut.start()
+        NumberAnimation {
+            duration: 215
+            target: level.requested
+            property: "iconOffsetY"
+            to: indicator.currentIconSize / (indicator.isMinimized ? -10 : 10) //Make these dependant on config and orientation
+            easing.type: Easing.OutSine
         }
-    }
 
-    NumberAnimation {
-        id: up
-        duration: 215
-        target: level.requested
-        property: "iconOffsetY"
-        to: -indicator.currentIconSize/10
-        easing.type: Easing.OutSine
-
-        onStopped: {
-            defaut.start()
+        NumberAnimation {
+            duration: 215
+            target: level.requested
+            property: "iconOffsetY"
+            to: 0
+            easing.type: Easing.OutBack
+            easing.overshoot: 2
         }
-    }
-
-    NumberAnimation {
-        id: defaut // Can't call it default or it wont work
-        duration: 215
-        target: level.requested
-        property: "iconOffsetY"
-        to: 0
-        easing.type: Easing.OutBack
-        easing.overshoot: 2
     }
 
     // Binding{
