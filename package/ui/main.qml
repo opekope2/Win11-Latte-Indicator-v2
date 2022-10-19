@@ -6,7 +6,6 @@ import org.kde.plasma.core 2.0 as PlasmaCore
 
 import org.kde.latte.components 1.0 as LatteComponents
 
-
 LatteComponents.IndicatorItem {
     id: root
     needsIconColors: true
@@ -118,18 +117,19 @@ LatteComponents.IndicatorItem {
 
     // Transition: clicked -> activate or minimze (depending) -> default
     NumberAnimation {
-            running: indicator.isPressed
-            duration: 125
-            loops: Animation.Infinite
-            target: level.requested
-            property: "iconScale"
-            to: 0.75
-            easing.type: Easing.OutQuad
+        running: indicator.isPressed
+        duration: 125
+        loops: Animation.Infinite
+        target: level.requested
+        property: "iconScale"
+        to: 0.75
+        easing.type: Easing.OutQuad
 
-            onStopped: {
-                anim.start()
-            }
+        onStopped: {
+            anim.start()
         }
+    }
+
     NumberAnimation {
         id: anim
         duration: 125
@@ -139,8 +139,7 @@ LatteComponents.IndicatorItem {
         easing.type: Easing.OutQuad
         onStopped: {
             pause.start()
-            }
-        
+        }
     }
     
     // Even though the pause is extremely short and subtle, I feel like it makes the animation look a lot better
@@ -156,17 +155,18 @@ LatteComponents.IndicatorItem {
     }
 
     NumberAnimation {
-            id: down
-            duration: 215
-            target: level.requested
-            property: "iconOffsetY"
-            to: indicator.currentIconSize/10 //Make these dependant on config and orientation
-            easing.type: Easing.OutSine
+        id: down
+        duration: 215
+        target: level.requested
+        property: "iconOffsetY"
+        to: indicator.currentIconSize/10 //Make these dependant on config and orientation
+        easing.type: Easing.OutSine
 
-            onStopped: {
-                defaut.start()
-            }
+        onStopped: {
+            defaut.start()
         }
+    }
+
     NumberAnimation {
         id: up
         duration: 215
@@ -175,8 +175,8 @@ LatteComponents.IndicatorItem {
         to: -indicator.currentIconSize/10
         easing.type: Easing.OutSine
         onStopped: {
-                defaut.start()
-            }
+            defaut.start()
+        }
     }
     
     NumberAnimation {
@@ -188,8 +188,6 @@ LatteComponents.IndicatorItem {
         easing.type: Easing.OutBack
         easing.overshoot: 2
     }
-
-    
 
     // Binding{
     //     target: level.requested
@@ -210,21 +208,21 @@ LatteComponents.IndicatorItem {
     //     }
     // }
 
-    Binding{
+    Binding {
         target: root
         property: "appletLengthPadding"
         when: root.hasOwnProperty("appletLengthPadding")
         value: indicator.configuration.appletPadding
     }
 
-    Binding{
+    Binding {
         target: root
         property: "enabledForApplets"
         when: root.hasOwnProperty("enabledForApplets")
         value: indicator.configuration.enabledForApplets
     }
 
-    Binding{
+    Binding {
         target: root
         property: "lengthPadding"
         when: root.hasOwnProperty("lengthPadding")

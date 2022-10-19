@@ -14,75 +14,73 @@ ColumnLayout {
     Layout.fillWidth: true
 
     LatteComponents.SubHeader {
-		text: i18n("Colors Style")
-	}
+        text: i18n("Colors Style")
+    }
 
-	ColumnLayout {
+    ColumnLayout {
+        spacing: 0
 
-		spacing: 0
+        RowLayout {
+            Layout.fillWidth: true
+            spacing: 2
 
-		RowLayout {
+            readonly property int colorStyle: indicator.configuration.colorStyle
+            readonly property int buttonCount: 2
+            readonly property int buttonSize: (dialog.optionsWidth - (spacing * buttonCount - 1)) / buttonCount
 
-			Layout.fillWidth: true
-			spacing: 2
+            ButtonGroup {
+                id: colorStyleGroup
+            }
 
-			readonly property int colorStyle: indicator.configuration.colorStyle
-			readonly property int buttonCount: 2
-			readonly property int buttonSize: (dialog.optionsWidth - (spacing * buttonCount - 1)) / buttonCount
+            function updateColorStyleConfig(style) {
+                indicator.configuration.colorStyle = style
+            }
 
-			ButtonGroup {
-				id: colorStyleGroup
-			}
+            PlasmaComponents.Button {
+                Layout.minimumWidth: parent.buttonSize
+                Layout.maximumWidth: Layout.minimumWidth
 
-			function updateColorStyleConfig(style) {
-				indicator.configuration.colorStyle = style
-			}
+                // Simple (theme.backgroundColor)
+                readonly property int colorStyle: 0
 
-			PlasmaComponents.Button {
-				Layout.minimumWidth: parent.buttonSize
-				Layout.maximumWidth: Layout.minimumWidth
+                text: i18nc("Simple Colorscheme", "Simple")
+                checked: parent.colorStyle === colorStyle
+                checkable: false
+                ToolTip.text: i18n("Use simple color for background")
+                ToolTip.visible: hovered
+                ToolTip.delay: 1000
+                ButtonGroup.group: colorStyleGroup
 
-				// Simple (theme.backgroundColor)
-				readonly property int colorStyle: 0
+                onPressedChanged: {
+                    if (pressed) {
+                        parent.updateColorStyleConfig(colorStyle)
+                    }
+                }
+            }
 
-				text: i18nc("Simple Colorscheme", "Simple")
-				checked: parent.colorStyle === colorStyle
-				checkable: false
-				ToolTip.text: i18n("Use simple color for background")
-				ToolTip.visible: hovered
-				ToolTip.delay: 1000
-				ButtonGroup.group: colorStyleGroup
+            PlasmaComponents.Button {
+                Layout.minimumWidth: parent.buttonSize
+                Layout.maximumWidth: Layout.minimumWidth
 
-				onPressedChanged: {
-					if (pressed) {
-						parent.updateColorStyleConfig(colorStyle)
-					}
-				}
-			}
+                // Colorful (icon colors)
+                readonly property int colorStyle: 1
 
-			PlasmaComponents.Button {
-				Layout.minimumWidth: parent.buttonSize
-				Layout.maximumWidth: Layout.minimumWidth
+                text: i18nc("Colorful Colorscheme", "Colorful")
+                checked: parent.colorStyle === colorStyle
+                checkable: false
+                ToolTip.text: i18n("Use icon colors for background")
+                ToolTip.visible: hovered
+                ToolTip.delay: 1000
+                ButtonGroup.group: colorStyleGroup
 
-				// Colorful (icon colors)
-				readonly property int colorStyle: 1
-
-				text: i18nc("Colorful Colorscheme", "Colorful")
-				checked: parent.colorStyle === colorStyle
-				checkable: false
-				ToolTip.text: i18n("Use icon colors for background")
-				ToolTip.visible: hovered
-				ToolTip.delay: 1000
-				ButtonGroup.group: colorStyleGroup
-
-				onPressedChanged: {
-					if (pressed) {
-						parent.updateColorStyleConfig(colorStyle)
-					}
-				}
-			}
-		}
-	}
+                onPressedChanged: {
+                    if (pressed) {
+                        parent.updateColorStyleConfig(colorStyle)
+                    }
+                }
+            }
+        }
+    }
 
     LatteComponents.SubHeader {
         text: i18n("Background Indicator")
@@ -108,7 +106,7 @@ ColumnLayout {
 
                 leftPadding: 0
                 value: indicator.configuration.maxBackgroundOpacity * 100
-                from: 10
+                from: 0
                 to: 100
                 stepSize: 1
                 wheelEnabled: false
@@ -140,48 +138,44 @@ ColumnLayout {
             }
         }
 
-
         LatteComponents.CheckBox {
-			Layout.maximumWidth: dialog.optionsWidth
-			text: i18n("Always show background for open tasks/windows")
-			checked: indicator.configuration.backgroundAlwaysActive
+            Layout.maximumWidth: dialog.optionsWidth
+            text: i18n("Always show background for open tasks/windows")
+            checked: indicator.configuration.backgroundAlwaysActive
 
-			onClicked: {
-				indicator.configuration.backgroundAlwaysActive = !indicator.configuration.backgroundAlwaysActive;
-			}
-		}
-
+            onClicked: {
+                indicator.configuration.backgroundAlwaysActive = !indicator.configuration.backgroundAlwaysActive;
+            }
         }
-
+    }
         
-        LatteComponents.SubHeader {
+    LatteComponents.SubHeader {
         text: i18n("Line Indicator")
-        }
-
+    }
         
-        ColumnLayout {
+    ColumnLayout {
         spacing: 0
 
         LatteComponents.CheckBox {
-			Layout.maximumWidth: dialog.optionsWidth
-			text: i18n("Show line indicator")
-			checked: indicator.configuration.lineVisible
+            Layout.maximumWidth: dialog.optionsWidth
+            text: i18n("Show line indicator")
+            checked: indicator.configuration.lineVisible
 
-			onClicked: {
-				indicator.configuration.lineVisible = !indicator.configuration.lineVisible;
-			}
-		}
+            onClicked: {
+                indicator.configuration.lineVisible = !indicator.configuration.lineVisible;
+            }
+        }
 
         LatteComponents.CheckBox {
-			Layout.maximumWidth: dialog.optionsWidth
-			text: i18n("Reverse indicator position")
-			checked: indicator.configuration.reversed
-			visible: indicator.configuration.lineVisible
+            Layout.maximumWidth: dialog.optionsWidth
+            text: i18n("Reverse indicator position")
+            checked: indicator.configuration.reversed
+            visible: indicator.configuration.lineVisible
 
-			onClicked: {
-				indicator.configuration.reversed = !indicator.configuration.reversed;
-			}
-		}
+            onClicked: {
+                indicator.configuration.reversed = !indicator.configuration.reversed;
+            }
+        }
 
         RowLayout {
             Layout.fillWidth: true
@@ -246,19 +240,19 @@ ColumnLayout {
                 onClicked: {
                     indicator.configuration.lineColorOverride = !indicator.configuration.lineColorOverride
                 }
-		    }
+            }
 
             PlasmaComponents.Button {
                 id: colorPickerBtn
-				Layout.minimumWidth: implicitWidth
-				Layout.maximumWidth: Layout.minimumWidth
+                Layout.minimumWidth: implicitWidth
+                Layout.maximumWidth: Layout.minimumWidth
                 visible: indicator.configuration.lineColorOverride
-				text: i18nc("Indicator Color", "Choose color")
-				checked: false
-				checkable: false
-				ToolTip.text: i18n("Color for the line indicator")
-				ToolTip.visible: hovered
-				ToolTip.delay: 1000
+                text: i18nc("Indicator Color", "Choose color")
+                checked: false
+                checkable: false
+                ToolTip.text: i18n("Color for the line indicator")
+                ToolTip.visible: hovered
+                ToolTip.delay: 1000
 
                 ColorDialog {
                     id: lineColorDialog
@@ -271,11 +265,11 @@ ColumnLayout {
                 }
 
                 onPressedChanged: {
-					if (pressed) {
-						lineColorDialog.open()
-					}
-				}
-			}
+                    if (pressed) {
+                        lineColorDialog.open()
+                    }
+                }
+            }
 
             Rectangle {
                 id: colorRect
@@ -338,147 +332,146 @@ ColumnLayout {
         }
     }
 
-
     LatteComponents.SubHeader {
         text: i18n("Misc Options")
     }
 
     RowLayout {
+        Layout.fillWidth: true
+        spacing: units.smallSpacing
+
+        PlasmaComponents.Label {
+            Layout.minimumWidth: implicitWidth
+            horizontalAlignment: Text.AlignLeft
+            Layout.rightMargin: units.smallSpacing
+            text: i18n("Animation Speed")
+        }
+
+        LatteComponents.Slider {
+            id: animSpeedSlider
             Layout.fillWidth: true
-            spacing: units.smallSpacing
 
-            PlasmaComponents.Label {
-                Layout.minimumWidth: implicitWidth
-                horizontalAlignment: Text.AlignLeft
-                Layout.rightMargin: units.smallSpacing
-                text: i18n("Animation Speed")
-            }
+            leftPadding: 0
+            value: indicator.configuration.animationSpeed * 100
+            from: 10
+            to: 200
+            stepSize: 5
+            wheelEnabled: false
 
-            LatteComponents.Slider {
-                id: animSpeedSlider
-                Layout.fillWidth: true
-
-                leftPadding: 0
-                value: indicator.configuration.animationSpeed * 100
-                from: 10
-                to: 200
-                stepSize: 5
-                wheelEnabled: false
-
-                function updateAnimSpeed() {
-                    if (!pressed) {
-                        indicator.configuration.animationSpeed = value/100;
-                    }
-                }
-
-                onPressedChanged: {
-                    updateAnimSpeed();
-                }
-
-                Component.onCompleted: {
-                    valueChanged.connect(updateAnimSpeed);
-                }
-
-                Component.onDestruction: {
-                    valueChanged.disconnect(updateAnimSpeed);
+            function updateAnimSpeed() {
+                if (!pressed) {
+                    indicator.configuration.animationSpeed = value/100;
                 }
             }
 
-            PlasmaComponents.Label {
-                text: i18nc("number in percentage, e.g. 85 %","%1 %", animSpeedSlider.value)
-                horizontalAlignment: Text.AlignRight
-                Layout.minimumWidth: theme.mSize(theme.defaultFont).width * 4
-                Layout.maximumWidth: theme.mSize(theme.defaultFont).width * 4
+            onPressedChanged: {
+                updateAnimSpeed();
+            }
+
+            Component.onCompleted: {
+                valueChanged.connect(updateAnimSpeed);
+            }
+
+            Component.onDestruction: {
+                valueChanged.disconnect(updateAnimSpeed);
             }
         }
+
+        PlasmaComponents.Label {
+            text: i18nc("number in percentage, e.g. 85 %","%1 %", animSpeedSlider.value)
+            horizontalAlignment: Text.AlignRight
+            Layout.minimumWidth: theme.mSize(theme.defaultFont).width * 4
+            Layout.maximumWidth: theme.mSize(theme.defaultFont).width * 4
+        }
+    }
 
     RowLayout {
+        Layout.fillWidth: true
+        spacing: units.smallSpacing
+        visible: deprecatedPropertiesAreHidden
+
+        PlasmaComponents.Label {
+            text: i18n("Tasks Length")
+            horizontalAlignment: Text.AlignLeft
+        }
+
+        LatteComponents.Slider {
+            id: lengthIntMarginSlider
             Layout.fillWidth: true
-            spacing: units.smallSpacing
-            visible: deprecatedPropertiesAreHidden
 
-            PlasmaComponents.Label {
-                text: i18n("Tasks Length")
-                horizontalAlignment: Text.AlignLeft
-            }
+            value: Math.round(indicator.configuration.lengthPadding * 100)
+            from: 5
+            to: maxMargin
+            stepSize: 1
+            wheelEnabled: false
 
-            LatteComponents.Slider {
-                id: lengthIntMarginSlider
-                Layout.fillWidth: true
+            readonly property int maxMargin: 80
 
-                value: Math.round(indicator.configuration.lengthPadding * 100)
-                from: 5
-                to: maxMargin
-                stepSize: 1
-                wheelEnabled: false
-
-                readonly property int maxMargin: 80
-
-                onPressedChanged: {
-                    if (!pressed) {
-                        indicator.configuration.lengthPadding = value / 100;
-                    }
+            onPressedChanged: {
+                if (!pressed) {
+                    indicator.configuration.lengthPadding = value / 100;
                 }
-            }
-
-            PlasmaComponents.Label {
-                text: i18nc("number in percentage, e.g. 85 %","%1 %", currentValue)
-                horizontalAlignment: Text.AlignRight
-                Layout.minimumWidth: theme.mSize(theme.defaultFont).width * 4
-                Layout.maximumWidth: theme.mSize(theme.defaultFont).width * 4
-
-                readonly property int currentValue: lengthIntMarginSlider.value
             }
         }
 
-        RowLayout {
+        PlasmaComponents.Label {
+            text: i18nc("number in percentage, e.g. 85 %","%1 %", currentValue)
+            horizontalAlignment: Text.AlignRight
+            Layout.minimumWidth: theme.mSize(theme.defaultFont).width * 4
+            Layout.maximumWidth: theme.mSize(theme.defaultFont).width * 4
+
+            readonly property int currentValue: lengthIntMarginSlider.value
+        }
+    }
+
+    RowLayout {
+        Layout.fillWidth: true
+        spacing: 2
+
+        PlasmaComponents.Label {
+            Layout.minimumWidth: implicitWidth
+            horizontalAlignment: Text.AlignLeft
+            Layout.rightMargin: units.smallSpacing
+            text: i18n("Applets Length")
+        }
+
+        LatteComponents.Slider {
+            id: appletPaddingSlider
             Layout.fillWidth: true
-            spacing: 2
 
-            PlasmaComponents.Label {
-                Layout.minimumWidth: implicitWidth
-                horizontalAlignment: Text.AlignLeft
-                Layout.rightMargin: units.smallSpacing
-                text: i18n("Applets Length")
-            }
+            leftPadding: 0
+            value: indicator.configuration.appletPadding * 100
+            from: 0
+            to: 80
+            stepSize: 5
+            wheelEnabled: false
 
-            LatteComponents.Slider {
-                id: appletPaddingSlider
-                Layout.fillWidth: true
-
-                leftPadding: 0
-                value: indicator.configuration.appletPadding * 100
-                from: 0
-                to: 80
-                stepSize: 5
-                wheelEnabled: false
-
-                function updateMargin() {
-                    if (!pressed) {
-                        indicator.configuration.appletPadding = value/100;
-                    }
-                }
-
-                onPressedChanged: {
-                    updateMargin();
-                }
-
-                Component.onCompleted: {
-                    valueChanged.connect(updateMargin);
-                }
-
-                Component.onDestruction: {
-                    valueChanged.disconnect(updateMargin);
+            function updateMargin() {
+                if (!pressed) {
+                    indicator.configuration.appletPadding = value/100;
                 }
             }
 
-            PlasmaComponents.Label {
-                text: i18nc("number in percentage, e.g. 85 %","%1 %", appletPaddingSlider.value)
-                horizontalAlignment: Text.AlignRight
-                Layout.minimumWidth: theme.mSize(theme.defaultFont).width * 4
-                Layout.maximumWidth: theme.mSize(theme.defaultFont).width * 4
+            onPressedChanged: {
+                updateMargin();
+            }
+
+            Component.onCompleted: {
+                valueChanged.connect(updateMargin);
+            }
+
+            Component.onDestruction: {
+                valueChanged.disconnect(updateMargin);
             }
         }
+
+        PlasmaComponents.Label {
+            text: i18nc("number in percentage, e.g. 85 %","%1 %", appletPaddingSlider.value)
+            horizontalAlignment: Text.AlignRight
+            Layout.minimumWidth: theme.mSize(theme.defaultFont).width * 4
+            Layout.maximumWidth: theme.mSize(theme.defaultFont).width * 4
+        }
+    }
 
     LatteComponents.CheckBoxesColumn {
         Layout.fillWidth: true

@@ -9,38 +9,38 @@ Item {
     property bool showProgress: false
     property int lineMargin: indicator.currentIconSize * 0.05
     readonly property bool isOnTop: (plasmoid.location === PlasmaCore.Types.TopEdge && !indicator.configuration.reversed)
-						    || (plasmoid.location === PlasmaCore.Types.BottomEdge && indicator.configuration.reversed)
-    
-    Rectangle {
-            id: activeLine
-            anchors.topMargin: isOnTop ? lineMargin : 0
-            anchors.bottomMargin: !isOnTop ? lineMargin : 0
-            radius: lineRadius
-            width: {
-                if (indicator.hasActive) {
-                    return parent.width - (2 * shrinkLengthEdgeActive);
-                }
+                            || (plasmoid.location === PlasmaCore.Types.BottomEdge && indicator.configuration.reversed)
 
-                return parent.width - (2 * shrinkLengthEdge);
+    Rectangle {
+        id: activeLine
+        anchors.topMargin: isOnTop ? lineMargin : 0
+        anchors.bottomMargin: !isOnTop ? lineMargin : 0
+        radius: lineRadius
+        width: {
+            if (indicator.hasActive) {
+                return parent.width - (2 * shrinkLengthEdgeActive);
             }
 
-            height: root.lineThickness
+            return parent.width - (2 * shrinkLengthEdge);
+        }
 
-            color: !indicator.hasActive ? "#9a9a9a" : root.activeColor
+        height: root.lineThickness
 
-            // Latte needed to be restarted to see any changes if root.isVisible was in the visible property
-            // The opacity property doesn't have that problem
-            opacity: root.isVisible ? 1 : 0
-            visible: !indicator.isApplet && (rectangleItem.isActive || indicator.isWindow)
+        color: !indicator.hasActive ? "#9a9a9a" : root.activeColor
 
-            // Change either the speed or the easing type to more closely match the Win11 line
-            Behavior on width {
-                NumberAnimation {
-                    duration: 250
-                    easing.type: Easing.OutCirc
-                }
+        // Latte needed to be restarted to see any changes if root.isVisible was in the visible property
+        // The opacity property doesn't have that problem
+        opacity: root.isVisible ? 1 : 0
+        visible: !indicator.isApplet && (rectangleItem.isActive || indicator.isWindow)
+
+        // Change either the speed or the easing type to more closely match the Win11 line
+        Behavior on width {
+            NumberAnimation {
+                duration: 250
+                easing.type: Easing.OutCirc
             }
         }
+    }
     
     // Making the progress bar a "state" of the active line might be a better idea 
     // to avoid some little visual glitches and could look better with a morphing animation between
@@ -53,8 +53,8 @@ Item {
         active: indicator.configuration.progressAnimationEnabled && lineIndicator.showProgress && indicator.progress > 0
         width: lineIndicator.width * 0.45
         height: activeLine.height
-        sourceComponent: Item{
-            Item{
+        sourceComponent: Item {
+            Item {
                 id: progressFrame
                 anchors.fill: parent
                 Rectangle {

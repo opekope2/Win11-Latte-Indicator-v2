@@ -17,7 +17,7 @@ import QtGraphicalEffects 1.0
 import org.kde.plasma.plasmoid 2.0
 import org.kde.plasma.core 2.0 as PlasmaCore
 
-Item{
+Item {
     id: rectangleItem
 
     property bool isActive: indicator.isActive || (indicator.isWindow && indicator.hasActive)
@@ -76,7 +76,7 @@ Item{
         gradient: Gradient {
             GradientStop { position: 0.0; color: mainRect.color }
             GradientStop { position: 0.1; color: "transparent" }
-            }
+        }
         visible: false
     }
 
@@ -91,15 +91,15 @@ Item{
         visible: mainRect.visible
     }
 
-    Loader{
-            id: frontLayer
-            anchors.fill: mainRect
+    Loader {
+        id: frontLayer
+        anchors.fill: mainRect
 
-            active: indicator.isWindow
-            
-            sourceComponent: FrontLayer{
-                anchors.fill: mainRect
-                showProgress: root.progressVisible
-            }
+        active: indicator.isWindow
+
+        sourceComponent: FrontLayer {
+            anchors.fill: mainRect
+            showProgress: root.progressVisible
         }
+    }
 }
