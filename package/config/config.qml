@@ -12,11 +12,11 @@ import org.kde.latte.components 1.0 as LatteComponents
 
 ColumnLayout {
     Layout.fillWidth: true
-        
+
     LatteComponents.SubHeader {
         text: i18n("Line Indicator")
     }
-        
+
     ColumnLayout {
         spacing: 0
 
@@ -178,10 +178,8 @@ ColumnLayout {
                     }
                 }
 
-                onPressedChanged: {
-                    if (pressed) {
-                        lineActiveColorDialog.open()
-                    }
+                onClicked: {
+                    lineActiveColorDialog.open()
                 }
             }
 
@@ -231,10 +229,8 @@ ColumnLayout {
                     }
                 }
 
-                onPressedChanged: {
-                    if (pressed) {
-                        lineInactiveColorDialog.open()
-                    }
+                onClicked: {
+                    lineInactiveColorDialog.open()
                 }
             }
 
@@ -284,10 +280,8 @@ ColumnLayout {
                     }
                 }
 
-                onPressedChanged: {
-                    if (pressed) {
-                        lineAttentionColorDialog.open()
-                    }
+                onClicked: {
+                    lineAttentionColorDialog.open()
                 }
             }
 

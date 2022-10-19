@@ -17,17 +17,9 @@ LatteComponents.IndicatorItem {
     enabledForApplets: indicator && indicator.configuration ? indicator.configuration.enabledForApplets : true
 
     readonly property bool progressVisible: indicator.hasOwnProperty("progressVisible") ? indicator.progressVisible : false
-    readonly property bool isHorizontal: plasmoid.formFactor === PlasmaCore.Types.Horizontal
-    readonly property bool isVertical: !isHorizontal
     readonly property bool isVisible: indicator.configuration.lineVisible
 
     readonly property int screenEdgeMargin: indicator.hasOwnProperty("screenEdgeMargin") ? indicator.screenEdgeMargin : 0
-    readonly property int thickness: !isHorizontal ? width - screenEdgeMargin : height - screenEdgeMargin
-
-    readonly property int shownWindows: indicator.windowsCount - indicator.windowsMinimizedCount
-    readonly property int maxDrawnMinimizedWindows: shownWindows > 0 ? Math.min(indicator.windowsMinimizedCount,2) : 3
-
-    readonly property int groupItemLength: indicator.currentIconSize * 0.13
 
     readonly property real backColorBrightness: colorBrightness(indicator.palette.backgroundColor)
     readonly property color outlineColor: backColorBrightness < 127 ? indicator.palette.backgroundColor : indicator.palette.textColor
@@ -48,7 +40,7 @@ LatteComponents.IndicatorItem {
 
     readonly property int lineRadius: indicator.configuration.lineRadius
     readonly property int lineThickness: Math.max(indicator.currentIconSize * indicator.configuration.lineThickness, 2)
-    
+
     property real scale: {
         if (indicator.isPressed)
             return 0.8;
@@ -65,7 +57,7 @@ LatteComponents.IndicatorItem {
         return 0;
     }
 
-    // Binding{
+    // Binding {
     //     target: level.requested
     //     property: "iconScale"
     //     when: level && level.requested && level.requested.hasOwnProperty("iconScale")
@@ -108,21 +100,23 @@ LatteComponents.IndicatorItem {
         property: "iconScale"
         to: 1
         easing.type: Easing.OutQuad
+
         onStopped: {
             pause.start()
         }
     }
-    
+
     // Even though the pause is extremely short and subtle, I feel like it makes the animation look a lot better
     PauseAnimation {
         id: pause
         duration: 15
+
         onStopped: {
             if (indicator.isMinimized) // Would be nice to make this happen only if no window is shown
                 down.start()
             else if (indicator.isActive)
                 up.start()
-            }
+        }
     }
 
     NumberAnimation {
@@ -145,11 +139,12 @@ LatteComponents.IndicatorItem {
         property: "iconOffsetY"
         to: -indicator.currentIconSize/10
         easing.type: Easing.OutSine
+
         onStopped: {
             defaut.start()
         }
     }
-    
+
     NumberAnimation {
         id: defaut // Can't call it default or it wont work
         duration: 215
@@ -212,7 +207,7 @@ LatteComponents.IndicatorItem {
         Loader {
             id: backLayer
             anchors.fill: parent
-           
+
             // Make this configurable
             active: level.isBackground && !indicator.inRemoving
 
@@ -220,7 +215,7 @@ LatteComponents.IndicatorItem {
                 id: rectangleItem
 
                 property bool isActive: indicator.isActive || (indicator.isWindow && indicator.hasActive)
-                
+
                 anchors.centerIn: parent
 
                 Loader {

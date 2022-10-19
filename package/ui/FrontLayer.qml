@@ -41,8 +41,8 @@ Item {
             }
         }
     }
-    
-    // Making the progress bar a "state" of the active line might be a better idea 
+
+    // Making the progress bar a "state" of the active line might be a better idea
     // to avoid some little visual glitches and could look better with a morphing animation between
     // the states but this should work well enough and I don't yet feel compelled to change it
     Loader {
