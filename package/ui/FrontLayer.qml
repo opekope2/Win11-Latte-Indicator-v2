@@ -40,6 +40,23 @@ Item {
                 easing.type: Easing.OutCirc
             }
         }
+
+        SequentialAnimation on color {
+            running: indicator.inAttention
+            loops: Animation.Infinite
+
+            ColorAnimation {
+                duration: 500
+                from: root.inactiveColor
+                to: root.attentionColor
+            }
+
+            ColorAnimation {
+                duration: 500
+                from: root.attentionColor
+                to: root.inactiveColor
+            }
+        }
     }
 
     // Making the progress bar a "state" of the active line might be a better idea
