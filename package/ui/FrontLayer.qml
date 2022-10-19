@@ -26,7 +26,7 @@ Item {
 
         height: root.lineThickness
 
-        color: indicator.inAttention ? root.attentionColor : (!indicator.hasActive ? "#9a9a9a" : root.activeColor)
+        color: indicator.inAttention ? root.attentionColor : (indicator.hasActive ? root.activeColor : root.inactiveColor)
 
         // Latte needed to be restarted to see any changes if root.isVisible was in the visible property
         // The opacity property doesn't have that problem

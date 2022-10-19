@@ -18,20 +18,28 @@
         <label>Choose whether the line indicator is visible or invisible</label>
         <default>true</default>
     </entry> 
-    <entry name="lineColorOverride" type="Bool">
-        <label>Choose whether to override the line indicator color or not</label>
+    <entry name="customLineActiveColor" type="Bool">
+        <label>Use custom active color for line indicator or not</label>
         <default>false</default>
     </entry>
-    <entry name="lineColor" type="Color">
-        <label>The line indicator's color (if overridden)</label>
+    <entry name="lineActiveColor" type="Color">
+        <label>The line indicator's custom active color</label>
         <default>"#FFFFFFFF"</default>
     </entry>
-    <entry name="lineAttentionColorOverride" type="Bool">
-        <label>Choose whether to override the line indicator attention color or not</label>
+    <entry name="customLineInactiveColor" type="Bool">
+        <label>Use custom inactive color for line indicator or not</label>
+        <default>false</default>
+    </entry>
+    <entry name="lineInactiveColor" type="Color">
+        <label>The line indicator's custom inactive color</label>
+        <default>"#9A9A9A"</default>
+    </entry>
+    <entry name="customLineAttentionColor" type="Bool">
+        <label>Use custom attention color for line indicator or not</label>
         <default>false</default>
     </entry>
     <entry name="lineAttentionColor" type="Color">
-        <label>The line indicator's attention color (if overridden)</label>
+        <label>The line indicator's custom attention color</label>
         <default>"#FF8D00"</default>
     </entry>
     <entry name="reversed" type="Bool">

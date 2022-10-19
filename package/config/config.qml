@@ -148,49 +148,49 @@ ColumnLayout {
 
             LatteComponents.CheckBox {
                 Layout.maximumWidth: dialog.optionsWidth
-                text: i18n("Override the line indicator color")
-                checked: indicator.configuration.lineColorOverride
+                text: i18n("Custom active color")
+                checked: indicator.configuration.customLineActiveColor
 
                 onClicked: {
-                    indicator.configuration.lineColorOverride = !indicator.configuration.lineColorOverride
+                    indicator.configuration.customLineActiveColor = !indicator.configuration.customLineActiveColor
                 }
             }
 
             PlasmaComponents.Button {
-                id: lineColorPickBtn
+                id: lineActiveColorPickBtn
                 Layout.minimumWidth: implicitWidth
                 Layout.maximumWidth: Layout.minimumWidth
-                visible: indicator.configuration.lineColorOverride
-                text: i18nc("Indicator Color", "Choose color")
+                visible: indicator.configuration.customLineActiveColor
                 checked: false
                 checkable: false
-                ToolTip.text: i18n("Color for the line indicator")
+                ToolTip.text: i18n("Active color for the line indicator")
                 ToolTip.visible: hovered
                 ToolTip.delay: 1000
+                icon.name: "color-picker"
 
                 ColorDialog {
-                    id: lineColorDialog
+                    id: lineActiveColorDialog
 
-                    title: "Please choose a color"
-                    color: indicator.configuration.lineColor
+                    title: "Color of active line indicator"
+                    color: indicator.configuration.lineActiveColor
                     onAccepted: {
-                        indicator.configuration.lineColor = lineColorDialog.color
+                        indicator.configuration.lineActiveColor = lineActiveColorDialog.color
                     }
                 }
 
                 onPressedChanged: {
                     if (pressed) {
-                        lineColorDialog.open()
+                        lineActiveColorDialog.open()
                     }
                 }
             }
 
             Rectangle {
-                visible: indicator.configuration.lineColorOverride
-                width: lineColorPickBtn.width
-                height: lineColorPickBtn.height
+                visible: indicator.configuration.customLineActiveColor
+                width: lineActiveColorPickBtn.width
+                height: lineActiveColorPickBtn.height
                 radius: 5
-                color: indicator.configuration.lineColor
+                color: indicator.configuration.lineActiveColor
             }
         }
 
@@ -201,11 +201,64 @@ ColumnLayout {
 
             LatteComponents.CheckBox {
                 Layout.maximumWidth: dialog.optionsWidth
-                text: i18n("Override the line indicator attention color")
-                checked: indicator.configuration.lineAttentionColorOverride
+                text: i18n("Custom inactive color")
+                checked: indicator.configuration.customLineInactiveColor
 
                 onClicked: {
-                    indicator.configuration.lineAttentionColorOverride = !indicator.configuration.lineAttentionColorOverride
+                    indicator.configuration.customLineInactiveColor = !indicator.configuration.customLineInactiveColor
+                }
+            }
+
+            PlasmaComponents.Button {
+                id: lineInactiveColorPickBtn
+                Layout.minimumWidth: implicitWidth
+                Layout.maximumWidth: Layout.minimumWidth
+                visible: indicator.configuration.customLineInactiveColor
+                checked: false
+                checkable: false
+                ToolTip.text: i18n("Inactive color for the line indicator")
+                ToolTip.visible: hovered
+                ToolTip.delay: 1000
+                icon.name: "color-picker"
+
+                ColorDialog {
+                    id: lineInactiveColorDialog
+
+                    title: "Color of inactive line indicator"
+                    color: indicator.configuration.lineInactiveColor
+                    onAccepted: {
+                        indicator.configuration.lineInactiveColor = lineInactiveColorDialog.color
+                    }
+                }
+
+                onPressedChanged: {
+                    if (pressed) {
+                        lineInactiveColorDialog.open()
+                    }
+                }
+            }
+
+            Rectangle {
+                visible: indicator.configuration.customLineInactiveColor
+                width: lineInactiveColorPickBtn.width
+                height: lineInactiveColorPickBtn.height
+                radius: 5
+                color: indicator.configuration.lineInactiveColor
+            }
+        }
+
+        RowLayout {
+            Layout.fillWidth: true
+            spacing: 2
+            visible: indicator.configuration.lineVisible
+
+            LatteComponents.CheckBox {
+                Layout.maximumWidth: dialog.optionsWidth
+                text: i18n("Custom attention color")
+                checked: indicator.configuration.customLineAttentionColor
+
+                onClicked: {
+                    indicator.configuration.customLineAttentionColor = !indicator.configuration.customLineAttentionColor
                 }
             }
 
@@ -213,18 +266,18 @@ ColumnLayout {
                 id: lineAttentionColorPickBtn
                 Layout.minimumWidth: implicitWidth
                 Layout.maximumWidth: Layout.minimumWidth
-                visible: indicator.configuration.lineAttentionColorOverride
-                text: i18nc("Indicator Attention Color", "Choose color")
+                visible: indicator.configuration.customLineAttentionColor
                 checked: false
                 checkable: false
                 ToolTip.text: i18n("Attention color for the line indicator")
                 ToolTip.visible: hovered
                 ToolTip.delay: 1000
+                icon.name: "color-picker"
 
                 ColorDialog {
                     id: lineAttentionColorDialog
 
-                    title: "Please choose a color"
+                    title: "Color of attention line indicator"
                     color: indicator.configuration.lineAttentionColor
                     onAccepted: {
                         indicator.configuration.lineAttentionColor = lineAttentionColorDialog.color
@@ -239,7 +292,7 @@ ColumnLayout {
             }
 
             Rectangle {
-                visible: indicator.configuration.lineAttentionColorOverride
+                visible: indicator.configuration.customLineAttentionColor
                 width: lineAttentionColorPickBtn.width
                 height: lineAttentionColorPickBtn.height
                 radius: 5

@@ -30,9 +30,11 @@ LatteComponents.IndicatorItem {
     readonly property int groupItemLength: indicator.currentIconSize * 0.13
 
     readonly property real backColorBrightness: colorBrightness(indicator.palette.backgroundColor)
-    readonly property color activeColor: indicator.configuration.lineColorOverride ? indicator.configuration.lineColor : indicator.palette.buttonFocusColor
     readonly property color outlineColor: backColorBrightness < 127 ? indicator.palette.backgroundColor : indicator.palette.textColor
-    readonly property color attentionColor: indicator.configuration.lineAttentionColorOverride ? indicator.configuration.lineAttentionColor : "#FF8200"
+
+    readonly property color activeColor: indicator.configuration.customLineActiveColor ? indicator.configuration.lineActiveColor : indicator.palette.buttonFocusColor
+    readonly property color inactiveColor: indicator.configuration.customLineInactiveColor ? indicator.configuration.lineInactiveColor : "#9A9A9A"
+    readonly property color attentionColor: indicator.configuration.customLineAttentionColor ? indicator.configuration.lineAttentionColor : "#FF8200"
 
     function colorBrightness(color) {
         return colorBrightnessFromRGB(color.r * 255, color.g * 255, color.b * 255);
