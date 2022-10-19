@@ -114,7 +114,7 @@ LatteComponents.IndicatorItem {
             duration: 215
             target: level.requested
             property: "iconOffsetY"
-            to: indicator.currentIconSize / (indicator.isMinimized ? -10 : 10) //Make these dependant on config and orientation
+            to: indicator.currentIconSize / (indicator.isActive ? 10 : -10) //Make these dependant on config and orientation
             easing.type: Easing.OutSine
         }
 
